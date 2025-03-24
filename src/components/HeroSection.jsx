@@ -3,53 +3,54 @@ import { gsap } from "gsap";
 import backgroundImage from "../assets/najman-dp-removebg.png"; // Adjust to your image path
 
 const HeroSection = () => {
-  const heroRef = useRef(null); // Reference to the entire hero section
-  const personImageRef = useRef(null); // Reference to the image
-  const textLayerRef = useRef(null); // Reference to the text layer
-  const imageRevealRef = useRef(null); // Reference to the image reveal block
-  const imageLayerRef = useRef(null); // Reference to the image reveal block
+  const heroRef = useRef(null); 
+  const personImageRef = useRef(null); 
+  const textLayerRef = useRef(null); 
+  const imageRevealRef = useRef(null);
+  const imageLayerRef = useRef(null);
 
   useEffect(() => {
+    if (!heroRef.current) return; // Ensure heroRef is available
+
     // Step 1: Image Reveal Animation
     gsap.fromTo(
       imageRevealRef.current,
-      { y: "0%" }, // Start fully covering the image
+      { y: "0%" },
       {
-        y: "-100%", // Slide up and disappear
+        y: "-100%",
         duration: 1.5,
         ease: "power2.out",
-        delay: 0.5, // Allow image to load first
+        delay: 0.5,
       }
     );
 
     // Step 2: Staggered Heading Animations
     const headingsLeft = textLayerRef.current.querySelectorAll(".heading-left");
-    const headingsRight =
-      textLayerRef.current.querySelectorAll(".heading-right");
+    const headingsRight = textLayerRef.current.querySelectorAll(".heading-right");
 
     gsap.fromTo(
       headingsLeft,
-      { x: "-100%", opacity: 0 }, // Start from the left
+      { x: "-100%", opacity: 0 },
       {
-        x: "-30%", // Move into place
-        opacity: 1, // Fade in
-        stagger: 0.3, // Delay each heading
+        x: "-30%",
+        opacity: 1,
+        stagger: 0.3,
         duration: 3,
         ease: "back.out",
-        delay: 1, // Slight delay after the image reveal
+        delay: 1,
       }
     );
 
     gsap.fromTo(
       headingsRight,
-      { x: "100%", opacity: 0 }, // Start from the right
+      { x: "100%", opacity: 0 },
       {
-        x: "30%", // Move into place
-        opacity: 1, // Fade in
-        stagger: 0.3, // Delay each heading
+        x: "30%",
+        opacity: 1,
+        stagger: 0.3,
         duration: 3,
         ease: "back.out",
-        delay: 1, // Slight delay after the image reveal
+        delay: 1,
       }
     );
 
@@ -58,60 +59,50 @@ const HeroSection = () => {
       const { clientX, clientY } = event;
       const { offsetWidth, offsetHeight } = heroRef.current;
 
-      const x = (clientX / offsetWidth) * 2 - 1; // Normalize mouse X position
-      const y = (clientY / offsetHeight) * 2 - 1; // Normalize mouse Y position
+      const x = (clientX / offsetWidth) * 2 - 1;
+      const y = (clientY / offsetHeight) * 2 - 1;
 
-      // Move left headings further left with a smooth floating feel
       gsap.to(headingsLeft, {
-        x: (index) => `${-20 + x * -50}%`, // Move left dynamically
-        // y: y * 10, // Add slight vertical movement
+        x: (index) => `${-20 + x * -50}%`,
         duration: 2,
-        // delay: 2,
         ease: "power3.out",
       });
 
-      // Move right headings further right with a smooth floating feel
       gsap.to(headingsRight, {
-        x: (index) => `${20 + x * 50}%`, // Move right dynamically
-        // y: y * 10, // Add slight vertical movement
+        x: (index) => `${20 + x * 50}%`,
         duration: 2,
-        // delay: 2,
         ease: "power3.out",
       });
 
-      // Apply 3D effect to the person image
       gsap.to(personImageRef.current, {
-        x: x * 50, // Move horizontally
-        y: y * 20, // Move vertically
-
-        scale: 1.05, // Slight zoom
+        x: x * 30,
+        y: y * 10,
+        scale: 1.05,
         duration: 5,
         ease: "power3.out",
       });
-      // Apply 3D effect to the person image
-      gsap.to(imageLayerRef.current, {
-        rotateY: x * 10, // Add 3D rotation
-        rotateX: y * -5, // Add 3D rotation
 
-        scale: 1.05, // Slight zoom
+      gsap.to(imageLayerRef.current, {
+        scale: 1.05,
         duration: 5,
         ease: "power3.out",
       });
     };
 
-    const hero = heroRef.current;
-    hero.addEventListener("mousemove", handleMouseMove);
+    heroRef.current.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      hero.removeEventListener("mousemove", handleMouseMove);
+      if (heroRef.current) {
+        heroRef.current.removeEventListener("mousemove", handleMouseMove);
+      }
     };
   }, []);
 
   return (
     <div
       ref={heroRef}
-      className="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center top-20"
-      style={{ perspective: "1200px" }} // Set perspective for 3D depth
+      className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-center top-2 px-4 sm:px-10"
+      style={{ perspective: "1200px" }}
     >
       {/* Image Reveal Block */}
       <div
@@ -126,32 +117,31 @@ const HeroSection = () => {
         style={{
           zIndex: 9,
           fontWeight: "900",
-          fontSize: "clamp(3rem, 12vw, 8rem)",
+          fontSize: "clamp(1.5rem, 8vw, 6rem)",
           lineHeight: "1.2",
-          //   mixBlendMode: "overlay",
         }}
       >
-        <h1
-          className="heading-left uppercase"
-          style={{
-            zIndex: -1,
-          }}
-        >
-          Darren
+        <h1 className="heading-left uppercase tracking-widest text-gray-300 drop-shadow-lg">
+          Ahamed
         </h1>
-        <h1 className="heading-right uppercase">Harroff</h1>
-        <h1 className="heading-left uppercase">Webflow</h1>
-        <h1 className="heading-right uppercase">Expert</h1>
+        <h1 className="heading-right uppercase font-extralight italic text-gray-100 drop-shadow-xl">
+          Najman
+        </h1>
+        <h1 className="heading-left uppercase tracking-widest text-gray-300 drop-shadow-lg">
+          Web Design
+        </h1>
+        <h1 className="heading-right uppercase font-extralight italic text-gray-100 drop-shadow-xl">
+          Expert
+        </h1>
       </div>
 
       {/* Image Layer */}
       <div
-        className="absolute flex items-center justify-center opacity-80"
+        className="absolute w-[60vw] sm:w-[40vw] md:w-[30vw] aspect-[3/3.5] flex items-center justify-center opacity-80"
         ref={imageLayerRef}
         style={{
+          maxHeight: "85vh",
           zIndex: 10,
-          width: "33rem",
-          height: "38rem",
           backgroundImage: "linear-gradient(rgb(108 108 105), #B0BEC5)",
           borderRadius: "0.5rem",
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
@@ -164,9 +154,8 @@ const HeroSection = () => {
           style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "contain",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
             backgroundPosition: "center bottom",
+            backgroundRepeat: "no-repeat",
           }}
         ></div>
       </div>

@@ -1,68 +1,72 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-scroll";
+import Logo from "../assets/logo-text.png";
+import { FiMenu, FiX } from "react-icons/fi"; // Mobile menu icons
+
 const Navbar = () => {
+  const [textColor, setTextColor] = useState("text-white");
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targetColor = entry.target.dataset.navColor;
+            setTextColor(targetColor);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    const sections = document.querySelectorAll("[data-nav-color]");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <nav className="bg-black text-white fixed w-full z-10">
-      <div className="container mx-auto px-4 md:px-8 py-6 md:py-10 flex justify-between items-center">
+    <nav className="fixed w-full z-50 bg-transparent">
+      <div className="container mx-auto px-4 md:px-8 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-lg md:text-2xl font-bold">
-          <a href="#home">MyPortfolio</a>
+        <div className="w-11">
+          <Link to="hero" smooth={true} duration={500} offset={-50}>
+            <img src={Logo} alt="Logo" className="cursor-pointer" />
+          </Link>
         </div>
 
-        {/* Nav Links */}
-        <ul className="hidden md:flex space-x-6 lg:space-x-10 text-sm md:text-base lg:text-lg font-roboto">
-          <li>
-            <a
-              href="#hero"
-              className="hover:text-blue-400 transition duration-300"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              className="hover:text-blue-400 transition duration-300"
-            >
-              About Me
-            </a>
-          </li>
-          <li>
-            <a
-              href="#projects"
-              className="hover:text-blue-400 transition duration-300"
-            >
-              Projects
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              className="hover:text-blue-400 transition duration-300"
-            >
-              Contact
-            </a>
-          </li>
+        {/* Desktop Menu */}
+        <ul className={`hidden md:flex space-x-6 text-sm md:text-base font-roboto ${textColor}`}>
+          {["home", "about", "experience", "projects", "contact"].map((section) => (
+            <li key={section}>
+              <Link to={section} smooth={true} duration={500} offset={-50} className="cursor-pointer hover:text-blue-400">
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        {/* Mobile Menu */}
-        <div className="md:hidden">
-          <button className="text-white focus:outline-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
-        </div>
+        {/* Mobile Menu Button */}
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
+          {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="absolute top-14 left-0 w-full bg-black text-white">
+          <ul className="flex flex-col items-center space-y-4 py-4">
+            {["hero", "about", "experience", "projects", "contact"].map((section) => (
+              <li key={section}>
+                <Link to={section} smooth={true} duration={500} offset={-50} onClick={() => setIsOpen(false)} className="cursor-pointer hover:text-blue-400">
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };

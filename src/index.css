@@ -2,3 +2,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: black; /* or any other color */
+  overflow: hidden !important;
+}
+
+.section {
+  /* height: 100vh;  */
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 2rem; */
+}
+
+.content {
+  /* opacity: 0;
+  transition: opacity 0.5s ease-in-out; */
+}
