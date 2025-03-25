@@ -1,21 +1,29 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaGithub, FaLinkedin, FaInstagram, FaFacebook } from "react-icons/fa";
 
 const FloatingIconsBar = () => {
   const [scrolling, setScrolling] = useState(false);
   const controls = useAnimation();
-  let timeout = null;
+  const timeoutRef = useRef(null); // Store timeout reference
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolling(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setScrolling(false), 50);
+      
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => setScrolling(false), 50);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeoutRef.current); // Cleanup timeout on unmount
+    };
   }, []);
 
   useEffect(() => {

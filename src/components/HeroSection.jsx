@@ -3,14 +3,16 @@ import { gsap } from "gsap";
 import backgroundImage from "../assets/najman-dp-removebg.png"; // Adjust to your image path
 
 const HeroSection = () => {
-  const heroRef = useRef(null); 
-  const personImageRef = useRef(null); 
-  const textLayerRef = useRef(null); 
+  const heroRef = useRef(null);
+  const personImageRef = useRef(null);
+  const textLayerRef = useRef(null);
   const imageRevealRef = useRef(null);
   const imageLayerRef = useRef(null);
 
   useEffect(() => {
-    if (!heroRef.current) return; // Ensure heroRef is available
+    if (!heroRef.current) return;
+
+    const heroElement = heroRef.current; // Store the ref value in a variable
 
     // Step 1: Image Reveal Animation
     gsap.fromTo(
@@ -57,19 +59,19 @@ const HeroSection = () => {
     // Step 3: Mouse Parallax Effect
     const handleMouseMove = (event) => {
       const { clientX, clientY } = event;
-      const { offsetWidth, offsetHeight } = heroRef.current;
+      const { offsetWidth, offsetHeight } = heroElement; // Use the stored variable
 
       const x = (clientX / offsetWidth) * 2 - 1;
       const y = (clientY / offsetHeight) * 2 - 1;
 
       gsap.to(headingsLeft, {
-        x: (index) => `${-20 + x * -50}%`,
+        x: `${-20 + x * -50}%`,
         duration: 2,
         ease: "power3.out",
       });
 
       gsap.to(headingsRight, {
-        x: (index) => `${20 + x * 50}%`,
+        x: `${20 + x * 50}%`,
         duration: 2,
         ease: "power3.out",
       });
@@ -89,12 +91,10 @@ const HeroSection = () => {
       });
     };
 
-    heroRef.current.addEventListener("mousemove", handleMouseMove);
+    heroElement.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      if (heroRef.current) {
-        heroRef.current.removeEventListener("mousemove", handleMouseMove);
-      }
+      heroElement.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
