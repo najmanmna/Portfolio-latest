@@ -42,7 +42,7 @@ const SkillsSection = () => {
       initial={{ opacity: 0, y: 100 }}
       animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="relative flex flex-col items-center justify-center min-h-screen bg-[#1b107d36] text-white px-4"
+      className="relative flex flex-col items-center justify-center min-h-screen bg-[#1b107d36] text-white px-4 overflow-hidden"
     >
       <motion.h2
         initial={{ opacity: 0, y: -50 }}
@@ -50,7 +50,7 @@ const SkillsSection = () => {
         transition={{ delay: 0.2, duration: 1 }}
         className="absolute top-10 md:top-16 text-lg md:text-2xl font-light text-center w-[90%] max-w-2xl"
       >
-        I'm currently looking to join a{" "}
+        I'm currently looking to join a {" "}
         <span className="text-[#4d9df2] font-semibold">cross-functional</span>{" "}
         team that values improving people’s lives through accessible design.
       </motion.h2>
@@ -72,24 +72,24 @@ const SkillsSection = () => {
       <motion.div
         animate={isVisible ? { rotate: 360 } : { rotate: 0 }}
         transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-        className="absolute mt-24 w-[80vw] h-[80vw] max-w-[400px] max-h-[400px] flex items-center justify-center"
+        className="absolute mt-24 w-[80vw] h-[80vw] max-w-[350px] max-h-[350px] flex items-center justify-center"
         style={{
           width: "100%",
           height: "100%",
-          maxWidth: "400px",
-          maxHeight: "400px",
+          maxWidth: "350px",
+          maxHeight: "350px",
         }}
       >
         {skills.map((skill, index) => {
           const angle = (index / skills.length) * (2 * Math.PI);
-          const radius = window.innerWidth < 640 ? 120 : 160; // Smaller radius for mobile
+          const radius = window.innerWidth < 640 ? 100 : 140; // Adjusted radius for mobile
           const x = Math.cos(angle) * radius;
           const y = Math.sin(angle) * radius;
 
           return (
             <motion.div
               key={index}
-              className=" absolute w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-white bg-opacity-20 p-1 md:p-2"
+              className="absolute w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-white bg-opacity-20 p-1 md:p-2"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={
                 isVisible
@@ -100,6 +100,7 @@ const SkillsSection = () => {
               style={{
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`,
+                transform: "translate(-50%, -50%)", // Fix position
               }}
             >
               <img
