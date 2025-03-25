@@ -31,7 +31,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-8 py-3 flex justify-between items-center">
         {/* Logo */}
         <div className="w-11">
-          <Link to="hero" smooth={true} duration={500} offset={-50}>
+          <Link to="home" smooth={true} duration={500} offset={-50}>
             <img src={Logo} alt="Logo" className="cursor-pointer" />
           </Link>
         </div>

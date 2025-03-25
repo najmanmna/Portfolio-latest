@@ -22,7 +22,7 @@ const HeroSection = () => {
         y: "-100%",
         duration: 1.5,
         ease: "power2.out",
-        delay: 0.5,
+        delay: 1,
       }
     );
 
