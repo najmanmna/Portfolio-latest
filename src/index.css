@@ -5,7 +5,7 @@
 
 body {
   background-color: black; /* or any other color */
-  overflow: hidden !important;
+  overflow-x: hidden !important;
 }
 
 .section {
