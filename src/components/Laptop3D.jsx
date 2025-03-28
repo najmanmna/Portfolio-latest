@@ -1,22 +1,29 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// ✅ Preload the model
+useGLTF.preload("/laptop.glb");
 
 const LaptopModel = ({ projectImage, isVisible }) => {
   const { scene } = useGLTF("/laptop.glb");
   const texture = useTexture(projectImage);
   const groupRef = useRef();
 
-  // ✅ Enhance texture quality
-  texture.flipY = true;
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.anisotropy = Math.min(THREE.WebGLRenderer?.capabilities?.maxAnisotropy || 16, 16);
+  // ✅ Optimize texture settings
+  useMemo(() => {
+    if (texture) {
+      texture.flipY = true;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = Math.min(THREE.WebGLRenderer?.capabilities?.maxAnisotropy || 16, 16);
+    }
+  }, [texture]);
 
-  // ✅ Rotate laptop and screen together
+  // ✅ Smooth rotation when visible
   useFrame(({ clock }) => {
     if (groupRef.current && isVisible) {
       groupRef.current.rotation.y = 0.2 * Math.sin(clock.elapsedTime * 0.5);
@@ -26,8 +33,6 @@ const LaptopModel = ({ projectImage, isVisible }) => {
   return (
     <group ref={groupRef}>
       <primitive object={scene} scale={0.5} position={[0, -3.3, 0]} />
-
-      {/* Screen - Nested inside same group to stay aligned */}
       <mesh position={[0, 2.05, -5.3]}>
         <planeGeometry args={[14.66, 8.5]} />
         <meshBasicMaterial map={texture} toneMapped={false} />
@@ -41,32 +46,32 @@ const Laptop3D = ({ projectImage }) => {
   const [showHint, setShowHint] = useState(false);
   const laptopRef = useRef(null);
 
-  // ✅ Show controls & hint when scrolled into view
+  // ✅ Use IntersectionObserver for better performance
   useEffect(() => {
-    const handleScroll = () => {
-      if (!laptopRef.current) return;
-      const rect = laptopRef.current.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.75) {
-        setShowControls(true);
-        setShowHint(true);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowControls(true);
+          setShowHint(true);
+          setTimeout(() => setShowHint(false), 3000);
+        }
+      },
+      { threshold: 0.5 }
+    );
 
-        // Hide hint after 3 seconds
-        setTimeout(() => setShowHint(false), 3000);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (laptopRef.current) observer.observe(laptopRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div ref={laptopRef} className="relative w-full h-full">
       <Canvas camera={{ position: [0, 2, 22], fov: 45 }} style={{ width: "100%", height: "100%" }}>
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[3, 3, 3]} intensity={1} />
-
-        <LaptopModel projectImage={projectImage} isVisible={showControls} />
-        {showControls && <OrbitControls enableZoom={false} enablePan={false} />}
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.6} />
+          <directionalLight position={[3, 3, 3]} intensity={1} />
+          <LaptopModel projectImage={projectImage} isVisible={showControls} />
+          {showControls && <OrbitControls enableZoom={false} enablePan={false} />}
+        </Suspense>
       </Canvas>
 
       {/* 🔹 Drag to Rotate Hint */}

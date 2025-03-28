@@ -12,7 +12,7 @@ const projects = [
     description:
       "An AI-powered chat platform that provides real-time conversations and smart responses.",
     techStack: ["React", "Python", "Tailwind CSS", "OpenAI API"],
-    liveSite: "https://github.com/najmanmna/ChatpadA",
+    liveSite: "https://github.com/najmanmna/ChatpadAI",
     image: project1,
   },
   {
@@ -20,7 +20,7 @@ const projects = [
     description:
       "A comprehensive job search portal that connects job seekers with recruiters effortlessly.",
     techStack: ["React", "MongoDB", "Tailwind CSS"],
-    liveSite: "#",
+    liveSite: "https://github.com/najmanmna/Job-Search-Portal",
     image: project2,
   },
   {
