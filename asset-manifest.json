@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.471fefad.css",
+    "main.js": "/static/js/main.5a4dfbc9.js",
+    "static/media/Food App.png": "/static/media/Food App.acb09f590e5e636e49da.png",
+    "static/media/softmark.png": "/static/media/softmark.938da5616e6c2b5d6c6a.png",
+    "static/media/najman-dp-removebg.png": "/static/media/najman-dp-removebg.123ec42c6e156a5f86b5.png",
+    "static/media/Portfolio.png": "/static/media/Portfolio.4c9a71e5882054efb127.png",
+    "static/media/chatpadai.png": "/static/media/chatpadai.82dde19e75b58e398a46.png",
+    "static/media/mongodb.svg": "/static/media/mongodb.1dc47c60f9d90afc1e171c4529af5966.svg",
+    "static/media/nodejs.svg": "/static/media/nodejs.4d8b9a0c5a604b6b68d3750273f913d6.svg",
+    "static/media/github.svg": "/static/media/github.8d1bc524d64f25bee143d25b34c557ac.svg",
+    "static/media/blender.svg": "/static/media/blender.145b8bb4cfb315bd3616188c8e7978d7.svg",
+    "static/media/react.svg": "/static/media/react.f57b349b4d9df56c9b48c916a8d5adfb.svg",
+    "static/media/python.svg": "/static/media/python.4298525c028749eb4fa154f8f5bd1931.svg",
+    "static/media/javascript.svg": "/static/media/javascript.fef7215d0d3e578f01ad70419d4c4308.svg",
+    "static/media/figma.svg": "/static/media/figma.bea8c3d9ceeae18aa9ab87c9b198a183.svg",
+    "index.html": "/index.html",
+    "static/media/tailwind.svg": "/static/media/tailwind.973c73e85d4daa24b257ba20298716c4.svg",
+    "static/media/css.svg": "/static/media/css.315b8fdb9dbf75ae965b80bf368895cd.svg",
+    "static/media/html.svg": "/static/media/html.0107c93943a8f415b5db64ebb0a9d12d.svg",
+    "main.471fefad.css.map": "/static/css/main.471fefad.css.map",
+    "main.5a4dfbc9.js.map": "/static/js/main.5a4dfbc9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.471fefad.css",
+    "static/js/main.5a4dfbc9.js"
+  ]
+}
