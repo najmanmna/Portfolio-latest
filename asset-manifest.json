@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.471fefad.css",
-    "main.js": "/static/js/main.5a4dfbc9.js",
+    "main.js": "/static/js/main.5ac9196a.js",
     "static/media/Food App.png": "/static/media/Food App.acb09f590e5e636e49da.png",
-    "static/media/softmark.png": "/static/media/softmark.938da5616e6c2b5d6c6a.png",
     "static/media/najman-dp-removebg.png": "/static/media/najman-dp-removebg.123ec42c6e156a5f86b5.png",
     "static/media/Portfolio.png": "/static/media/Portfolio.4c9a71e5882054efb127.png",
     "static/media/chatpadai.png": "/static/media/chatpadai.82dde19e75b58e398a46.png",
+    "static/media/Jobsearchportal.png": "/static/media/Jobsearchportal.53c27574190e90f9530b.png",
     "static/media/mongodb.svg": "/static/media/mongodb.1dc47c60f9d90afc1e171c4529af5966.svg",
     "static/media/nodejs.svg": "/static/media/nodejs.4d8b9a0c5a604b6b68d3750273f913d6.svg",
     "static/media/github.svg": "/static/media/github.8d1bc524d64f25bee143d25b34c557ac.svg",
@@ -20,10 +20,10 @@
     "static/media/css.svg": "/static/media/css.315b8fdb9dbf75ae965b80bf368895cd.svg",
     "static/media/html.svg": "/static/media/html.0107c93943a8f415b5db64ebb0a9d12d.svg",
     "main.471fefad.css.map": "/static/css/main.471fefad.css.map",
-    "main.5a4dfbc9.js.map": "/static/js/main.5a4dfbc9.js.map"
+    "main.5ac9196a.js.map": "/static/js/main.5ac9196a.js.map"
   },
   "entrypoints": [
     "static/css/main.471fefad.css",
-    "static/js/main.5a4dfbc9.js"
+    "static/js/main.5ac9196a.js"
   ]
 }
