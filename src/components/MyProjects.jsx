@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Laptop3D from "./Laptop3D"; // 3D laptop component
 import project1 from "../assets/myproject-images/chatpadai.png";
-import project2 from "../assets/myproject-images/softmark.png";
+import project2 from "../assets/myproject-images/Jobsearchportal.png";
 import project3 from "../assets/myproject-images/Portfolio.png";
 import project4 from "../assets/myproject-images/Food App.png";
 

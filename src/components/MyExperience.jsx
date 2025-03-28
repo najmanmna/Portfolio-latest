@@ -9,13 +9,14 @@ const experiences = [
     company: "SoftMark Solutions - Pakistan",
     role: "Web Developer Intern",
     date: "Jun - 2024",
-    description: "Redesigned the company’s website, improving page load speed by 30%.",
+    description:
+      "Worked on designing company’s website enhancing with animations.",
   },
   {
     company: "GIGHUB - Sri Lanka",
     role: "Software Engineer Intern",
     date: "Feb - 2024",
-    description: "Collaborated with a team to develop a client dashboard using React and Firebase.",
+    description: "Collaborated with a team to develop few client projects",
   },
 ];
 
@@ -65,7 +66,10 @@ const MyExperience = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} className="relative bg-black min-h-screen text-white py-16 px-4 md:px-8 flex flex-col items-center">
+    <div
+      ref={sectionRef}
+      className="relative bg-black min-h-screen text-white py-16 px-4 md:px-8 flex flex-col items-center"
+    >
       {/* Experience Title */}
       <h1 className="absolute top-8 text-4xl md:text-6xl font-bold text-gray-500 uppercase tracking-wide text-center">
         My Experience
@@ -74,7 +78,10 @@ const MyExperience = () => {
       {/* Timeline Container */}
       <div className="relative flex flex-col items-center w-full sm:w-2/3 mt-20 md:mt-32">
         {/* Timeline Line */}
-        <div ref={timelineRef} className="timeline-line absolute left-1/2 transform -translate-x-1/2 w-1 bg-cyan-400 h-full z-0 shadow-lg shadow-cyan-400"></div>
+        <div
+          ref={timelineRef}
+          className="timeline-line absolute left-1/2 transform -translate-x-1/2 w-1 bg-cyan-400 h-full z-0 shadow-lg shadow-cyan-400"
+        ></div>
 
         {experiences.map((exp, index) => (
           <div
@@ -100,7 +107,9 @@ const MyExperience = () => {
               <h3 className="text-2xl md:text-4xl font-bold text-green-400 transition-all">
                 {exp.role}
               </h3>
-              <p className="text-gray-300 text-sm md:text-base">{exp.description}</p>
+              <p className="text-gray-300 text-sm md:text-base">
+                {exp.description}
+              </p>
             </div>
           </div>
         ))}
