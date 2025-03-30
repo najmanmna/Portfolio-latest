@@ -10,7 +10,7 @@ const experiences = [
     role: "Web Developer Intern",
     date: "Jun - 2024",
     description:
-      "Worked on designing company’s website enhancing with animations.",
+      "Worked on designing company website - enhancing with animations.",
   },
   {
     company: "GIGHUB - Sri Lanka",

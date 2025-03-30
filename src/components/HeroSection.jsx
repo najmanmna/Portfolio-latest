@@ -56,14 +56,10 @@ const HeroSection = () => {
       }
     );
 
-    // Step 3: Mouse Parallax Effect
-    const handleMouseMove = (event) => {
-      const { clientX, clientY } = event;
-      const { offsetWidth, offsetHeight } = heroElement; // Use the stored variable
+    // Step 3: Parallax Effect (Mouse for Desktop, Gyro for Mobile)
+    const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-      const x = (clientX / offsetWidth) * 2 - 1;
-      const y = (clientY / offsetHeight) * 2 - 1;
-
+    const updateAnimation = (x, y) => {
       gsap.to(headingsLeft, {
         x: `${-20 + x * -50}%`,
         duration: 2,
@@ -91,23 +87,44 @@ const HeroSection = () => {
       });
     };
 
-    heroElement.addEventListener("mousemove", handleMouseMove);
+    if (isMobile) {
+      // Gyro-based movement for mobile
+      const handleDeviceOrientation = (event) => {
+        const { beta, gamma } = event; // Tilt forward/back and left/right
+        const x = gamma / 45; // Normalize tilt (-1 to 1)
+        const y = beta / 90; // Normalize tilt (-1 to 1)
+        updateAnimation(x, y);
+      };
 
-    return () => {
-      heroElement.removeEventListener("mousemove", handleMouseMove);
-    };
+      window.addEventListener("deviceorientation", handleDeviceOrientation);
+      return () => window.removeEventListener("deviceorientation", handleDeviceOrientation);
+    } else {
+      // Mouse movement for desktop
+      const handleMouseMove = (event) => {
+        const { clientX, clientY } = event;
+        const { offsetWidth, offsetHeight } = heroElement;
+
+        const x = (clientX / offsetWidth) * 2 - 1;
+        const y = (clientY / offsetHeight) * 2 - 1;
+
+        updateAnimation(x, y);
+      };
+
+      heroElement.addEventListener("mousemove", handleMouseMove);
+      return () => heroElement.removeEventListener("mousemove", handleMouseMove);
+    }
   }, []);
 
   return (
     <div
       ref={heroRef}
-      className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-center top-2 px-4 sm:px-10"
+      className="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-center px-4 sm:px-10"
       style={{ perspective: "1200px" }}
     >
       {/* Image Reveal Block */}
       <div
         ref={imageRevealRef}
-        className="absolute top-10 left-0 w-full h-full bg-black z-20"
+        className="absolute top-0 left-0 w-full h-full bg-black z-20"
       ></div>
 
       {/* Text Layer */}

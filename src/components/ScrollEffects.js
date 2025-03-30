@@ -7,11 +7,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollEffects = () => {
   useEffect(() => {
-    // ✅ Initialize Lenis Smooth Scrolling
+    // ✅ Optimize Lenis Smooth Scroll
     const lenis = new Lenis({
       smooth: true,
-      duration: 1.8, // Slightly slower for a smoother effect
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing for a natural feel
+      duration: window.innerWidth < 768 ? 1.2 : 1.8, // Faster scroll on mobile
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
     function raf(time) {
@@ -20,39 +20,69 @@ const ScrollEffects = () => {
     }
     requestAnimationFrame(raf);
 
-    // ✅ Apply animations to all sections
-    gsap.utils.toArray(".section").forEach((section) => {
-      const content = section.querySelector(".content");
+    // ✅ Use GSAP matchMedia for Mobile/Desktop
+    let mm = gsap.matchMedia();
 
-      // ✅ Fade-in & slide-up effect when section is **fully visible**
-      gsap.fromTo(
-        content,
-        { opacity: 0, y: 80 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power3.out",
+    mm.add("(min-width: 768px)", () => {
+      // Desktop Animations
+      gsap.utils.toArray(".section").forEach((section) => {
+        const content = section.querySelector(".content");
+
+        // Fade-in & slide-up effect
+        gsap.fromTo(
+          content,
+          { opacity: 0, y: 80 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 60%",
+              end: "top 30%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+
+        // Magnetic snap effect **only on desktop**
+        gsap.to(section, {
+          scale: 1.05,
           scrollTrigger: {
             trigger: section,
-            start: "top 60%", // Starts animation when 60% of the section is visible
-            end: "top 30%",
-            toggleActions: "play none none reverse",
+            start: "top 50%",
+            end: "top 10%",
+            pin: true,
+            scrub: 1.2,
+            snap: { snapTo: "labels", duration: 0.6, delay: 0.2, ease: "power2.inOut" },
           },
-        }
-      );
+        });
+      });
+    });
 
-      // ✅ Magnetic "snap-to-viewport" effect when scrolling past 50%
-      gsap.to(section, {
-        scale: 1.05, // Subtle zoom effect for better visual flow
-        scrollTrigger: {
-          trigger: section,
-          start: "top 50%",
-          end: "top 10%",
-          pin: true, // Locks section until scrolled past
-          scrub: 1.2, // Smooth transition effect
-          snap: { snapTo: "labels", duration: 0.6, delay: 0.2, ease: "power2.inOut" }, // Magnetic snap
-        },
+    mm.add("(max-width: 767px)", () => {
+      // Mobile Optimizations
+      gsap.utils.toArray(".section").forEach((section) => {
+        const content = section.querySelector(".content");
+
+        // Simpler Fade-in animation
+        gsap.fromTo(
+          content,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%", // Triggers later for smoother UX
+              end: "top 50%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
       });
     });
 
@@ -61,7 +91,7 @@ const ScrollEffects = () => {
     };
   }, []);
 
-  return null; // This component only applies effects
+  return null;
 };
 
 export default ScrollEffects;

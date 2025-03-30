@@ -4,11 +4,8 @@ import { Mail, Send, Loader } from "lucide-react";
 
 const ContactTerminal = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState({
-    submitted: false,
-    error: false,
-    loading: false,
-  });
+  const [status, setStatus] = useState({ submitted: false, error: false, loading: false });
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const controls = useAnimation();
   const sectionRef = useRef(null);
@@ -60,7 +57,7 @@ const ContactTerminal = () => {
     <motion.section
       ref={sectionRef}
       id="contact"
-      className="relative min-h-screen flex flex-col items-center justify-center bg-black text-white px-6 overflow-hidden"
+      className={`relative min-h-screen flex flex-col items-center justify-center bg-black text-white px-6 overflow-hidden ${isKeyboardOpen ? "pb-32" : ""}`}
       initial={{ opacity: 0, y: 50 }}
       animate={controls}
       transition={{ duration: 1 }}
@@ -84,31 +81,22 @@ const ContactTerminal = () => {
         transition={{ duration: 0.8 }}
       >
         <div className="relative">
-          <div className="mb-6">
-            <label className="text-gray-300 text-sm">Name</label>
-            <motion.input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              whileFocus={{ scale: 1.05 }}
-              required
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="text-gray-300 text-sm">Email</label>
-            <motion.input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              whileFocus={{ scale: 1.05 }}
-              required
-            />
-          </div>
+          {["name", "email"].map((field) => (
+            <div key={field} className="mb-6">
+              <label className="text-gray-300 text-sm capitalize">{field}</label>
+              <motion.input
+                type={field === "email" ? "email" : "text"}
+                name={field}
+                value={form[field]}
+                onChange={handleChange}
+                onFocus={() => setIsKeyboardOpen(true)}
+                onBlur={() => setIsKeyboardOpen(false)}
+                className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                whileFocus={{ scale: 1.05 }}
+                required
+              />
+            </div>
+          ))}
 
           <div className="mb-6">
             <label className="text-gray-300 text-sm">Message</label>
@@ -116,6 +104,8 @@ const ContactTerminal = () => {
               name="message"
               value={form.message}
               onChange={handleChange}
+              onFocus={() => setIsKeyboardOpen(true)}
+              onBlur={() => setIsKeyboardOpen(false)}
               rows="4"
               className="w-full p-3 bg-gray-800/70 text-white rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               whileFocus={{ scale: 1.05 }}
