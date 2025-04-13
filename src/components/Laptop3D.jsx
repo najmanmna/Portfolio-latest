@@ -1,52 +1,112 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import { useRef, useState, useEffect, Suspense, useMemo } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  useLayoutEffect,
+  Suspense,
+  useMemo,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// ✅ Preload the model
 useGLTF.preload("/laptop.glb");
 
-const LaptopModel = ({ projectImage, isVisible }) => {
+const ProjectScreenMesh = ({ lidRotation, texture }) => {
+  const meshRef = useRef();
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = lidRotation.current + 3.143; // invert lid angle
+    }
+  });
+
+  return (
+    <mesh
+      ref={meshRef}
+      name="ProjectScreenMesh"
+      position={[0, 2.05, -6.03]}
+      scale={[1, 1, 1]}
+    >
+      <planeGeometry args={[14.66, 8.6]} />
+      <meshBasicMaterial map={texture} toneMapped={false} />
+    </mesh>
+  );
+};
+
+const LaptopModel = ({ projectImage, isVisible, triggerOpenAnimation }) => {
   const { scene } = useGLTF("/laptop.glb");
   const texture = useTexture(projectImage);
+  const screenRef = useRef();
+  const frameRef = useRef();
   const groupRef = useRef();
 
-  // ✅ Optimize texture settings
+  const [lidOpen, setLidOpen] = useState(false);
+  const [lidFullyOpen, setLidFullyOpen] = useState(false);
+  const lidRotation = useRef(4.14); // ~ -80 degrees in radians (closed)
+
   useMemo(() => {
     if (texture) {
       texture.flipY = true;
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.minFilter = THREE.LinearMipmapLinearFilter;
       texture.magFilter = THREE.LinearFilter;
-      texture.anisotropy = Math.min(THREE.WebGLRenderer?.capabilities?.maxAnisotropy || 16, 16);
+      texture.anisotropy = 16;
     }
   }, [texture]);
 
-  // ✅ Smooth rotation when visible
-  useFrame(({ clock }) => {
-    if (groupRef.current && isVisible) {
-      groupRef.current.rotation.y = 0.2 * Math.sin(clock.elapsedTime * 0.5);
+  useLayoutEffect(() => {
+    if (!scene) return;
+
+    scene.traverse((child) => {
+      if (child.name === "Screen") {
+        screenRef.current = child;
+        screenRef.current.rotation.x = lidRotation.current;
+      }
+      if (child.name === "Frame") {
+        frameRef.current = child;
+      }
+    });
+  }, [scene]);
+
+  useFrame(() => {
+    if (screenRef.current && lidOpen) {
+      lidRotation.current = THREE.MathUtils.lerp(
+        lidRotation.current,
+        3, // Target open angle
+        0.02
+      );
+
+      screenRef.current.rotation.x = lidRotation.current;
+
+      if (lidRotation.current <= 3.05 && !lidFullyOpen) {
+        setLidFullyOpen(true);
+      }
     }
   });
+
+  useEffect(() => {
+    if (isVisible || triggerOpenAnimation) {
+      setLidOpen(true);
+    }
+  }, [isVisible, triggerOpenAnimation]);
 
   return (
     <group ref={groupRef}>
       <primitive object={scene} scale={0.5} position={[0, -3.3, 0]} />
-      <mesh position={[0, 2.05, -5.3]}>
-        <planeGeometry args={[14.66, 8.5]} />
-        <meshBasicMaterial map={texture} toneMapped={false} />
-      </mesh>
+      {screenRef.current && texture && lidFullyOpen && (
+        <ProjectScreenMesh lidRotation={lidRotation} texture={texture} />
+      )}
     </group>
   );
 };
 
-const Laptop3D = ({ projectImage }) => {
+const Laptop3D = ({ projectImage, triggerOpen = false }) => {
   const [showControls, setShowControls] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const laptopRef = useRef(null);
 
-  // ✅ Use IntersectionObserver for better performance
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -65,16 +125,25 @@ const Laptop3D = ({ projectImage }) => {
 
   return (
     <div ref={laptopRef} className="relative w-full h-full">
-      <Canvas camera={{ position: [0, 2, 22], fov: 45 }} style={{ width: "100%", height: "100%" }}>
+      <Canvas
+        camera={{ position: [0, 2, 22], fov: 45 }}
+        style={{ width: "100%", height: "100%" }}
+      >
         <Suspense fallback={null}>
           <ambientLight intensity={0.6} />
           <directionalLight position={[3, 3, 3]} intensity={1} />
-          <LaptopModel projectImage={projectImage} isVisible={showControls} />
-          {showControls && <OrbitControls enableZoom={false} enablePan={false} />}
+          <LaptopModel
+            projectImage={projectImage}
+            isVisible={showControls}
+            triggerOpenAnimation={triggerOpen}
+          />
+          {showControls && (
+            <OrbitControls enableZoom={false} enablePan={false} />
+          )}
         </Suspense>
       </Canvas>
 
-      {/* 🔹 Drag to Rotate Hint */}
+      {/* Hint */}
       <AnimatePresence>
         {showHint && (
           <motion.div

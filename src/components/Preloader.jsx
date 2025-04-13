@@ -44,7 +44,7 @@ const Preloader = ({ onFinish }) => {
               initial={{ width: 0 }}
               animate={{ width: "auto" }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="text-5xl md:text-4xl sm:text-xl font-signature border-r-4 border-white pr-2 whitespace-nowrap overflow-hidden"
+              className="text-5xl md:text-4xl sm:text-[10px] font-signature border-r-4 border-white pr-2 whitespace-nowrap overflow-hidden"
             >
               Ahamed Najman
             </motion.span>
