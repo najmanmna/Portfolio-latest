@@ -1,3 +1,4 @@
+// Laptop3D.js
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -10,6 +11,7 @@ import {
   useMemo,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Loader from "./LaptopLoader"; // <-- Import Loader component
 
 useGLTF.preload("/laptop.glb");
 
@@ -129,7 +131,7 @@ const Laptop3D = ({ projectImage, triggerOpen = false }) => {
         camera={{ position: [0, 2, 22], fov: 45 }}
         style={{ width: "100%", height: "100%" }}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <ambientLight intensity={0.6} />
           <directionalLight position={[3, 3, 3]} intensity={1} />
           <LaptopModel

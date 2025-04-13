@@ -28,7 +28,8 @@ const HeroSection = () => {
 
     // Step 2: Staggered Heading Animations
     const headingsLeft = textLayerRef.current.querySelectorAll(".heading-left");
-    const headingsRight = textLayerRef.current.querySelectorAll(".heading-right");
+    const headingsRight =
+      textLayerRef.current.querySelectorAll(".heading-right");
 
     gsap.fromTo(
       headingsLeft,
@@ -97,7 +98,11 @@ const HeroSection = () => {
       };
 
       window.addEventListener("deviceorientation", handleDeviceOrientation);
-      return () => window.removeEventListener("deviceorientation", handleDeviceOrientation);
+      return () =>
+        window.removeEventListener(
+          "deviceorientation",
+          handleDeviceOrientation
+        );
     } else {
       // Mouse movement for desktop
       const handleMouseMove = (event) => {
@@ -111,7 +116,8 @@ const HeroSection = () => {
       };
 
       heroElement.addEventListener("mousemove", handleMouseMove);
-      return () => heroElement.removeEventListener("mousemove", handleMouseMove);
+      return () =>
+        heroElement.removeEventListener("mousemove", handleMouseMove);
     }
   }, []);
 
@@ -159,20 +165,26 @@ const HeroSection = () => {
         style={{
           maxHeight: "85vh",
           zIndex: 10,
-          backgroundImage: "linear-gradient(rgb(108 108 105), #B0BEC5)",
-          borderRadius: "0.5rem",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.6)",
+          background: "rgba(255, 255, 255, 0.05)",
+          borderRadius: "1rem",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          boxShadow: "0 8px 32px rgba(255, 255, 255, 0.1)",
           overflow: "hidden",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
+        <div className="absolute w-full h-full bg-gradient-radial from-[#ffffff15] to-transparent] z-0"></div>
+
         <div
           ref={personImageRef}
-          className="relative w-full h-full bg-cover bg-center"
+          className="relative w-full h-full bg-cover bg-center after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[30%] after:bg-gradient-to-t after:from-black after:to-transparent"
           style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "contain",
             backgroundPosition: "center bottom",
             backgroundRepeat: "no-repeat",
+            filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4))",
           }}
         ></div>
       </div>
