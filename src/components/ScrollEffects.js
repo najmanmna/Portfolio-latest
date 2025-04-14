@@ -13,6 +13,7 @@ const ScrollEffects = () => {
       duration: window.innerWidth < 768 ? 1.2 : 1.8, // Faster scroll on mobile
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
+    lenis.on("scroll", ScrollTrigger.update);
 
     function raf(time) {
       lenis.raf(time);
@@ -54,7 +55,7 @@ const ScrollEffects = () => {
             start: "top 50%",
             end: "top 10%",
             pin: true,
-            scrub: 1.2,
+            scrub: 0.5,
             snap: { snapTo: "labels", duration: 0.6, delay: 0.2, ease: "power2.inOut" },
           },
         });
