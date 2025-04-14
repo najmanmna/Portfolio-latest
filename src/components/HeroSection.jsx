@@ -86,6 +86,13 @@ const HeroSection = () => {
         duration: 5,
         ease: "power3.out",
       });
+      gsap.to(personImageRef.current, {
+        y: "-2%",
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     };
 
     if (isMobile) {
@@ -141,7 +148,7 @@ const HeroSection = () => {
           zIndex: 9,
           fontWeight: "900",
           fontSize: "clamp(1.5rem, 8vw, 6rem)",
-          lineHeight: "1.2",
+          lineHeight: "1.3",
         }}
       >
         <h1 className="heading-left uppercase tracking-widest text-gray-300 drop-shadow-lg">
@@ -167,13 +174,15 @@ const HeroSection = () => {
           zIndex: 10,
           background: "rgba(255, 255, 255, 0.05)",
           borderRadius: "1rem",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
           boxShadow: "0 8px 32px rgba(255, 255, 255, 0.1)",
           overflow: "hidden",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          // border: "1px solid rgba(255, 255, 255, 0.2)",
+          border: "1px solid rgba(255,255,255,0.1)",
         }}
       >
+        <div className="shine"></div>
         <div className="absolute w-full h-full bg-gradient-radial from-[#ffffff15] to-transparent] z-0"></div>
 
         <div
@@ -184,9 +193,13 @@ const HeroSection = () => {
             backgroundSize: "contain",
             backgroundPosition: "center bottom",
             backgroundRepeat: "no-repeat",
-            filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4))",
+            // filter: "drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4))",
+            filter: "brightness(0.9) contrast(1.05) saturate(0.9)",
+            mixBlendMode: "soft-light", // subtle blend with the background
+            opacity: 0.9,
           }}
-        ></div>
+        ><div className="absolute inset-0 bg-black/0 backdrop-blur-[0.5px] z-10"></div>
+</div>
       </div>
     </div>
   );

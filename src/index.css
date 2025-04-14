@@ -7,3 +7,32 @@ body {
   background-color: black; /* or any other color */
   overflow-x: hidden !important;
 }
+
+@keyframes shine {
+  0% {
+    transform: rotate(45deg) translate(-100%, -100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: rotate(45deg) translate(200%, 200%);
+    opacity: 0;
+  }
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 150%;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 80%
+  );
+  animation: shine 10.5s infinite;
+}
