@@ -54,9 +54,11 @@ const SkillsSection = () => {
         transition={{ delay: 0.2, duration: 1 }}
         className="absolute top-10 md:top-16 text-lg md:text-2xl font-light text-center w-[90%] max-w-2xl"
       >
-        I'm currently looking to join a{" "}
-        <span className="text-[#4d9df2] font-semibold">cross-functional</span>{" "}
-        team that values improving people’s lives through accessible design.
+        Need a{" "}
+        <span className="text-[#4d9df2] font-semibold">
+          fast, modern, and responsive website
+        </span>{" "}
+        ? I’m here to turn your ideas into a powerful online presence.{" "}
       </motion.h2>
 
       {/* Center Profile Image with Glow */}

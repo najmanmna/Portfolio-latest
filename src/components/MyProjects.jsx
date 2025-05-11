@@ -68,7 +68,7 @@ const MyProjects = () => {
         transition={{ duration: 1 }}
         className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-300 uppercase tracking-wide mb-20 text-center"
       >
-        My Projects
+        My Work
       </motion.h1>
 
       <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full max-w-6xl gap-12">

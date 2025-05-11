@@ -31,7 +31,7 @@ function App() {
           <div id="experience" className="section">
             <MyExperience />
           </div>
-          <div id="projects" className="section">
+          <div id="My Work" className="section">
             <MyProjects />
           </div>
           <div id="skills" className="section">
