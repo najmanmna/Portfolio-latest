@@ -28,11 +28,15 @@ const ProjectScreenMesh = ({ lidRotation, texture }) => {
     <mesh
       ref={meshRef}
       name="ProjectScreenMesh"
-      position={[0, 2.05, -6.03]}
+      position={[0, 2.05, -6.00]}
       scale={[1, 1, 1]}
     >
       <planeGeometry args={[14.66, 8.6]} />
-      <meshBasicMaterial map={texture} toneMapped={false} />
+      <meshBasicMaterial
+        map={texture}
+        toneMapped={false}
+        side={THREE.DoubleSide}
+      />
     </mesh>
   );
 };
@@ -48,15 +52,18 @@ const LaptopModel = ({ projectImage, isVisible, triggerOpenAnimation }) => {
   const [lidFullyOpen, setLidFullyOpen] = useState(false);
   const lidRotation = useRef(4.14); // ~ -80 degrees in radians (closed)
 
-  useMemo(() => {
-    if (texture) {
-      texture.flipY = true;
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.minFilter = THREE.LinearMipmapLinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.anisotropy = 16;
-    }
-  }, [texture]);
+useMemo(() => {
+  if (texture) {
+    texture.flipY = true;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.anisotropy = 16;
+    texture.generateMipmaps = true;
+    texture.needsUpdate = true;
+  }
+}, [texture]);
+
 
   useLayoutEffect(() => {
     if (!scene) return;
@@ -127,7 +134,8 @@ const Laptop3D = ({ projectImage, triggerOpen = false }) => {
 
   return (
     <div ref={laptopRef} className="relative w-full h-full">
-      <Canvas
+      
+      <Canvas dpr={[1, 2]}
         camera={{ position: [0, 2, 22], fov: 45 }}
         style={{ width: "100%", height: "100%" }}
       >
@@ -138,6 +146,7 @@ const Laptop3D = ({ projectImage, triggerOpen = false }) => {
             projectImage={projectImage}
             isVisible={showControls}
             triggerOpenAnimation={triggerOpen}
+            
           />
           {showControls && (
             <OrbitControls enableZoom={false} enablePan={false} />

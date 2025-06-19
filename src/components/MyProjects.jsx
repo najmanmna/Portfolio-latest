@@ -1,12 +1,24 @@
 import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Laptop3D from "./Laptop3D"; // 3D laptop component
+import phh from "../assets/myproject-images/phh.png";
+
 import project1 from "../assets/myproject-images/chatpadai.png";
 import project2 from "../assets/myproject-images/Jobsearchportal.png";
 import project3 from "../assets/myproject-images/Portfolio.png";
 import project4 from "../assets/myproject-images/Food App.png";
 
 const projects = [
+  {
+    title: "PHH NGO Website",
+    description:
+      "Patients Helping Hands (PHH) is a student-run NGO based in Pakistan supporting underprivileged patients.",
+    techStack: ["React", "Tailwind CSS"],
+    liveSite: "https://phhwa.org.pk",
+    caseStudy: true,
+    caseStudyId: "phhwa",
+    image: phh,
+  },
   {
     title: "ChatPad AI",
     description:
@@ -96,41 +108,58 @@ const MyProjects = () => {
               </span>
             ))}
           </div>
-          <div className="flex items-center justify-center md:justify-start gap-4 mt-6">
-            <motion.a
-              whileHover={{ scale: 1.1 }}
-              href={projects[currentProject].liveSite}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-green-400 hover:underline text-lg font-semibold transition-all"
-            >
-              Check Github
-            </motion.a>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full mt-6 gap-4">
+            {/* Links Section */}
+            <div className="flex gap-4 flex-wrap items-center">
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                href={projects[currentProject].liveSite}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-400 hover:underline text-lg font-semibold"
+              >
+                View Live
+              </motion.a>
 
-            {/* Navigation Buttons */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() =>
-                setCurrentProject(
-                  (prev) => (prev - 1 + projects.length) % projects.length
-                )
-              }
-              className="px-4 sm:px-6 py-2 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 transition-all"
-            >
-              &larr;
-            </motion.button>
+              {projects[currentProject].caseStudy && (
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  href={`/case-study/${projects[currentProject].caseStudyId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1 border border-blue-400 text-blue-300 text-sm rounded-md hover:bg-blue-800/20 transition-all"
+                >
+                  View Case Study
+                </motion.a>
+              )}
+            </div>
 
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() =>
-                setCurrentProject((prev) => (prev + 1) % projects.length)
-              }
-              className="px-4 sm:px-6 py-2 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 transition-all"
-            >
-              &rarr;
-            </motion.button>
+            {/* Arrows Section */}
+            <div className="flex gap-4 justify-end">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() =>
+                  setCurrentProject(
+                    (prev) => (prev - 1 + projects.length) % projects.length
+                  )
+                }
+                className="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-all"
+              >
+                &larr;
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() =>
+                  setCurrentProject((prev) => (prev + 1) % projects.length)
+                }
+                className="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-all"
+              >
+                &rarr;
+              </motion.button>
+            </div>
           </div>
         </motion.div>
 

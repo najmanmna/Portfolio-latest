@@ -1,13 +1,18 @@
+// src/components/Navbar.jsx
 import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { Link, animateScroll as scroll } from "react-scroll";
+import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "../assets/logo-text.png";
-import { FiMenu, FiX } from "react-icons/fi"; // Mobile menu icons
+import { FiMenu, FiX } from "react-icons/fi";
 
-const Navbar = () => {
+const Navbar = ({ variant = "full" }) => {
   const [textColor, setTextColor] = useState("text-white");
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    if (variant !== "full") return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -24,38 +29,49 @@ const Navbar = () => {
     sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
-  }, []);
+  }, [variant]);
 
   return (
     <nav className="fixed w-full z-50 bg-transparent">
       <div className="container mx-auto px-4 md:px-8 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="w-11">
-          <Link to="home" smooth={true} duration={500} offset={-50}>
-            <img src={Logo} alt="Logo" className="cursor-pointer" />
-          </Link>
+        <div className="w-11 cursor-pointer">
+          {location.pathname === "/" ? (
+            <Link to="home" smooth duration={500} offset={-50}>
+              <img src={Logo} alt="Logo" />
+            </Link>
+          ) : (
+            <img src={Logo} alt="Logo" onClick={() => navigate("/")} />
+          )}
         </div>
 
-        {/* Desktop Menu */}
-        <ul
-          className={`hidden md:flex space-x-6 text-sm md:text-base font-roboto ${textColor}`}
-        >
-          {["home", "about", "experience", "My Work", "contact"].map(
-            (section) => (
-              <li key={section}>
-                <Link
-                  to={section}
-                  smooth={true}
-                  duration={500}
-                  offset={-50}
-                  className="cursor-pointer hover:text-blue-400"
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </Link>
-              </li>
-            )
-          )}
-        </ul>
+        {/* Full Menu */}
+        {variant === "full" && (
+          <>
+            <ul className={`hidden md:flex space-x-6 text-sm md:text-base font-roboto ${textColor}`}>
+              {["home", "about", "experience", "My Work", "contact"].map((section) => (
+                <li key={section}>
+                  <Link
+                    to={section}
+                    smooth
+                    duration={500}
+                    offset={-50}
+                    className="cursor-pointer hover:text-blue-400"
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Mobile Menu Button */}
+            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
+              {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+            </button>
+          </>
+        )}
+
+        {/* WhatsApp CTA (shown in both variants) */}
         <a
           href="https://wa.me/94773285022?text=Hi%20Najman%2C%20I'm%20interested%20in%20working%20with%20you!"
           target="_blank"
@@ -71,46 +87,32 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 10h.01M12 14h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M8 10h.01M12 14h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
             </svg>
             Hire Me
           </span>
         </a>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white"
-        >
-          {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
-        </button>
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
+      {isOpen && variant === "full" && (
         <div className="absolute top-14 left-0 w-full bg-black text-white">
           <ul className="flex flex-col items-center space-y-4 py-4">
-            {["home", "about", "experience", "my work", "contact"].map(
-              (section) => (
-                <li key={section}>
-                  <Link
-                    to={section}
-                    smooth={true}
-                    duration={500}
-                    offset={-50}
-                    onClick={() => setIsOpen(false)}
-                    className="cursor-pointer hover:text-blue-400"
-                  >
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </Link>
-                </li>
-              )
-            )}
+            {["home", "about", "experience", "My Work", "contact"].map((section) => (
+              <li key={section}>
+                <Link
+                  to={section}
+                  smooth
+                  duration={500}
+                  offset={-50}
+                  onClick={() => setIsOpen(false)}
+                  className="cursor-pointer hover:text-blue-400"
+                >
+                  {section.charAt(0).toUpperCase() + section.slice(1)}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       )}
