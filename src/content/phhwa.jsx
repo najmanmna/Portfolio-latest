@@ -53,7 +53,7 @@ const PHHCaseStudy = () => {
         donors.
       </Section>
 
-      <Section title="🎯 Project Goal" index={2}>
+      <Section title="🌟 Project Goal" index={2}>
         To design and develop a modern, responsive, and minimal website that
         reflected PHH’s vision of compassion, service, and professionalism —
         while maintaining a subtle, non-commercial look that aligned with their
@@ -62,31 +62,33 @@ const PHHCaseStudy = () => {
 
       <Section title="👨‍💻 My Role" index={3}>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Frontend Developer & UI/UX Designer</li>
+          <li>Full-Stack Developer (React + CMS)</li>
+          <li>Led the end-to-end development process</li>
           <li>Direct communication with PHH’s executive board</li>
-          <li>Technical coordination with NGO team</li>
-          <li>Content Structuring & CMS Planning</li>
-          <li>Hosting & Domain Configuration</li>
+          <li>Technical collaboration and feature planning</li>
+          <li>Content structuring, CMS design & integration</li>
+          <li>Hosting & domain setup with cPanel</li>
         </ul>
       </Section>
 
       <Section title="🛠️ Tools & Stack" index={4}>
         <ul className="list-disc pl-6 space-y-1">
-          <li>React.js & Tailwind CSS</li>
+          <li>React.js & Tailwind CSS for frontend</li>
+          {/* <li>GSAP & Framer Motion for animations</li> */}
           <li>Figma for design collaboration</li>
-          <li>JSON for content structuring</li>
-          <li>Deployed via webhoster.pk cPanel</li>
+          <li>Sanity CMS for structured content management</li>
+          <li>Webhoster.pk for deployment (cPanel)</li>
         </ul>
       </Section>
 
-      <Section title="🧠 UX Highlights" index={5}>
+      <Section title="🧐 UX Highlights" index={5}>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Mobile-first layout with consistent spacing</li>
+          <li>Mobile-first design with optimal spacing</li>
           <li>Fully responsive layout for all devices</li>
+          <li>Clean UI with minimal distractions, focused on readability</li>
         </ul>
         <p className="mt-3">
-          ✨ The animated preloader, symbolizing care and healing, was a
-          favorite among the PHH team.
+          ✨ The animated preloader — inspired by their logo and mission — was a team favorite and added a meaningful touch to their homepage.
         </p>
       </Section>
 
@@ -98,25 +100,20 @@ const PHHCaseStudy = () => {
         </blockquote>
       </Section>
 
-      <Section title="🏁 Outcome" index={7}>
+      <Section title="🌟 Outcome" index={7}>
         <p>
-          The site now gives PHH a credible online presence that mirrors its
-          compassionate cause. It’s ready to support ongoing fundraising and
-          awareness campaigns.
+          The final site gives PHH a credible and trustworthy online presence to support donations, project visibility, and volunteer outreach. With the CMS in place, their team can now manage updates seamlessly and independently.
         </p>
-        {/* <p className="mt-2 italic text-sm text-gray-500">
-          (Official launch coming soon with a highlight reel & appreciation
-          ceremony.)
-        </p> */}
       </Section>
 
       <Section title="📌 Key Takeaways" index={8}>
         <ul className="list-disc pl-6 space-y-1">
-          <li>Led a solo freelance project from start to launch</li>
-          <li>Collaborated effectively with a real-world NGO</li>
-          <li>Improved ability to blend visual identity with UX clarity</li>
+          <li>Led a solo freelance project with real-world stakeholders</li>
+          <li>Strengthened skills in client communication and CMS integration</li>
+          <li>Balanced visual identity with performance and accessibility</li>
         </ul>
       </Section>
+
       <Section title="📸 Project Highlights" index={9}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <img
@@ -129,8 +126,6 @@ const PHHCaseStudy = () => {
             alt="PHH Website Screenshot"
             className="rounded-lg shadow-md"
           />
-          {/* Optional Group Photo */}
-          {/* <img src="/images/phh-group-photo.jpg" alt="Receiving Certificate" className="rounded-lg shadow-md" /> */}
         </div>
       </Section>
 
