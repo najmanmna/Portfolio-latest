@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from "react";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link } from "react-scroll";
 import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "../assets/logo-text.png";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -48,24 +48,31 @@ const Navbar = ({ variant = "full" }) => {
         {/* Full Menu */}
         {variant === "full" && (
           <>
-            <ul className={`hidden md:flex space-x-6 text-sm md:text-base font-roboto ${textColor}`}>
-              {["home", "about", "experience", "My Work", "contact"].map((section) => (
-                <li key={section}>
-                  <Link
-                    to={section}
-                    smooth
-                    duration={500}
-                    offset={-50}
-                    className="cursor-pointer hover:text-blue-400"
-                  >
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </Link>
-                </li>
-              ))}
+            <ul
+              className={`hidden md:flex space-x-6 text-sm md:text-base font-roboto ${textColor}`}
+            >
+              {["home", "about", "experience", "My Work", "contact"].map(
+                (section) => (
+                  <li key={section}>
+                    <Link
+                      to={section}
+                      smooth
+                      duration={500}
+                      offset={-50}
+                      className="cursor-pointer hover:text-blue-400"
+                    >
+                      {section.charAt(0).toUpperCase() + section.slice(1)}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
 
             {/* Mobile Menu Button */}
-            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden text-white"
+            >
               {isOpen ? <FiX size={28} /> : <FiMenu size={28} />}
             </button>
           </>
@@ -87,8 +94,12 @@ const Navbar = ({ variant = "full" }) => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M8 10h.01M12 14h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 10h.01M12 14h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"
+              />
             </svg>
             Hire Me
           </span>
@@ -99,20 +110,22 @@ const Navbar = ({ variant = "full" }) => {
       {isOpen && variant === "full" && (
         <div className="absolute top-14 left-0 w-full bg-black text-white">
           <ul className="flex flex-col items-center space-y-4 py-4">
-            {["home", "about", "experience", "My Work", "contact"].map((section) => (
-              <li key={section}>
-                <Link
-                  to={section}
-                  smooth
-                  duration={500}
-                  offset={-50}
-                  onClick={() => setIsOpen(false)}
-                  className="cursor-pointer hover:text-blue-400"
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </Link>
-              </li>
-            ))}
+            {["home", "about", "experience", "My Work", "contact"].map(
+              (section) => (
+                <li key={section}>
+                  <Link
+                    to={section}
+                    smooth
+                    duration={500}
+                    offset={-50}
+                    onClick={() => setIsOpen(false)}
+                    className="cursor-pointer hover:text-blue-400"
+                  >
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </div>
       )}
