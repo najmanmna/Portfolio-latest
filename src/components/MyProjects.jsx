@@ -124,7 +124,7 @@ const MyProjects = () => {
               {projects[currentProject].caseStudy && (
                 <motion.a
                   whileHover={{ scale: 1.05 }}
-                  href={`/case-study/${projects[currentProject].caseStudyId}`}
+                  href={`#/case-study/${projects[currentProject].caseStudyId}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-3 py-1 border border-blue-400 text-blue-300 text-sm rounded-md hover:bg-blue-800/20 transition-all"
