@@ -81,7 +81,7 @@ const Navbar = ({ variant = "full" }) => {
         {/* WhatsApp CTA */}
         <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
           <a
-            href="https://wa.me/94773285022?text=Hi%20Najman%2C%20I'm%20interested%20in%20working%20with%20you!"
+            href="https://wa.me/94717411188?text=Hi%20Najman%2C%20I'm%20interested%20in%20working%20with%20you!"
             target="_blank"
             rel="noopener noreferrer"
             className="relative inline-flex items-center justify-center px-6 py-2 overflow-hidden text-white transition duration-300 ease-out bg-green-600 rounded-full shadow-lg group hover:bg-green-700"

@@ -7,8 +7,31 @@ import project1 from "../assets/myproject-images/chatpadai.png";
 import project2 from "../assets/myproject-images/Jobsearchportal.png";
 import project3 from "../assets/myproject-images/Portfolio.png";
 import project4 from "../assets/myproject-images/Food App.png";
+import project5 from "../assets/myproject-images/thimmah.png";
+import project6 from "../assets/myproject-images/noorulhudha.png";
+
 
 const projects = [
+    {
+    title: "Thimmah Fitness Website",
+    description:
+      "Custom made premium fitness website for Thimmah Fitness, a personal trainer based in the Sri Lanka.",
+    techStack: ["React", "Tailwind CSS"],
+    liveSite: "https://thimmahfitness.netlify.app",
+    caseStudy: false,
+    caseStudyId: "",
+    image: project5,
+  },
+  {
+    title: "Noorul Hudha Institute",
+    description:
+      "Custom made premium website for Noorul Hudha Institute, an educational institute based in the Sri Lanka.",
+    techStack: ["React", "Tailwind CSS"],
+    liveSite: "https://noorulhudha.netlify.app",
+    caseStudy: false,
+    caseStudyId: "",
+    image: project6,
+  },
   {
     title: "PHH NGO Website",
     description:

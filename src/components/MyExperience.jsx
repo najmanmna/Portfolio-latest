@@ -6,17 +6,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
+    company: "Ahamed Web Studio",
+    role: "Freelancer",
+    date: "2025",
+    description: "Delivered websites for NGOs and businesses under my personal brand",
+  },
+
+  {
     company: "SoftMark Solutions - Pakistan",
     role: "Web Developer Intern",
     date: "Jun - 2024",
     description:
       "Worked on designing company website - enhancing with animations.",
-  },
-  {
-    company: "GIGHUB - Sri Lanka",
-    role: "Software Engineer Intern",
-    date: "Feb - 2024",
-    description: "Collaborated with a team to develop few client projects",
   },
 ];
 
